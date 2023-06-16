@@ -50,7 +50,8 @@ function App() {
     <>
       <Box
         // width={"50%"}
-        display={"flex"}
+        display={{ base: "block", md: "flex" }}
+        alignItems={"center"}
         border={"1px"}
         borderColor={"gray.200"}
         ml={"20"}
@@ -59,16 +60,11 @@ function App() {
         borderRadius={"xl"}
         fontFamily={"Inter"}
       >
-        <Box
-          width={"30%"}
-          padding={"10"}
-          border={"1px"}
-          borderColor={"gray.200"}
-        >
+        <Box width={{ base: "100%", md: "30%" }} padding={"10"}>
           <Center>
             {previewPic.length ? (
               <Avatar
-                size={{ base: "lg", md: "2xl" }}
+                size={{ base: "xl", md: "2xl" }}
                 src={`/${previewPic}`}
               ></Avatar>
             ) : (
@@ -83,7 +79,7 @@ function App() {
               {!editable ? (
                 <>
                   <Text fontWeight={"bold"} fontSize={"3xl"} color={"gray.700"}>
-                    Welcome, {JSON.parse(localStorage.getItem("profile")).name}
+                    Welcome, {formValue.name}
                   </Text>
                   <Center>
                     <Button
@@ -122,23 +118,25 @@ function App() {
             </Box>
           </Center>
         </Box>
-        <Box p={"10"} width={"70%"}>
+        <Box p={"10"} width={{ base: "100%", md: "70%" }}>
           {editable ? (
-            <form>
-              <FormControl>
+            <form onSubmit={handleSubmit}>
+              <FormControl isRequired>
                 <FormLabel>Full Name</FormLabel>
 
                 <Input
+                  type="text"
                   name="name"
                   value={formValue.name}
                   onChange={handleChange}
                 ></Input>
               </FormControl>
               <br></br>
-              <FormControl>
+              <FormControl isRequired>
                 <FormLabel>Bio</FormLabel>
 
                 <Input
+                  type="text"
                   name="bio"
                   value={formValue.bio}
                   onChange={handleChange}
@@ -157,14 +155,14 @@ function App() {
               <br></br>
               <Box display={"flex"} gap={"2"}>
                 <Button
-                  width={"10%"}
-                  onClick={handleSubmit}
+                  type={"submit"}
+                  width={{ base: "50%", md: "10%" }}
                   colorScheme="green"
                 >
                   Confirm
                 </Button>
                 <Button
-                  width={"10%"}
+                  width={{ base: "50%", md: "10%" }}
                   onClick={() => {
                     setEditable(false);
                     setFormValue(initialValues);
